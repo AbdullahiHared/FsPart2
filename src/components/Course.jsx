@@ -12,7 +12,10 @@ const Part = ({ part }) => {
 // Component for displaying the course details and total exercises
 const Course = ({ course }) => {
   // Calculate the total exercises by using reduce
-  const totalExercises = course.parts.reduce((sum, part) => sum + part.exercises, 0);
+  const totalExercises = course.parts.reduce(
+    (sum, part) => sum + part.exercises,
+    0
+  );
 
   return (
     <div>
@@ -20,7 +23,9 @@ const Course = ({ course }) => {
       {course.parts.map((part) => (
         <Part key={part.id} part={part} />
       ))}
-      <p><strong>Total exercises: {totalExercises}</strong></p>
+      <p>
+        <strong>Total exercises: {totalExercises}</strong>
+      </p>
     </div>
   );
 };
