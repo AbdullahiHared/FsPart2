@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from "react";
 import Filter from "./components/Filter";
 import axios from "axios";
@@ -17,41 +18,26 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [searchItem, setSearchItem] = useState("");
   const [filteredUsers, setFilteredUsers] = useState(persons);
+=======
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import People from './components/People'
 
-  // Filter change handler
-  const handleFilterChange = (event) => {
-    const searchValue = event.target.value;
-    setSearchItem(searchValue);
+const App = () => {
+  const [people, setPeople] = useState([])
+  const [newPerson, setNewPerson] = useState('')
+  const [number, setNumber] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [showAll, setShowAll] = useState(true)
+>>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
 
-    // Filter persons based on search value and update filteredUsers state
-    const filteredPersons = persons.filter((person) =>
-      person.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-
-    setFilteredUsers(filteredPersons);
-  };
-
-  // Name change handler
-  const handleNameChange = (event) => {
-    setNewName(event.target.value);
-  };
-
-  // Number change handler
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value);
-  };
 
   const addPerson = (event) => {
-    event.preventDefault();
-
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return; // Exit if a duplicate is found
-    }
-
+    event.preventDefault()
     const personObject = {
-      name: newName,
+      name: newPerson,
       number: newNumber,
+<<<<<<< HEAD
       id: persons.length + 1, 
     };
 
@@ -76,6 +62,35 @@ const App = () => {
     setNewName("");
     setNewNumber("");
   };
+=======
+      id: people.length + 1,
+    }
+
+    setPeople(people.concat(personObject))
+    setNewPerson('')
+  }
+
+  const handlePersonChange = (event) => {
+    setNewPerson(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/people')
+      .then(response => {
+        console.log('promise fulfilled')
+        console.log('response.data', response.data);
+        setPeople(response.data)
+      }).catch(error => {
+        console.log('error', error)
+      })
+  }, [])
+>>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
 
   const handleDelete = (id) => {
     const person = persons.find((person) => person.id === id);
@@ -108,6 +123,7 @@ const App = () => {
   
   return (
     <div>
+<<<<<<< HEAD
       <h2>Phonebook</h2>
       <Filter filter={searchItem} handleFilterChange={handleFilterChange} />
 
@@ -136,8 +152,25 @@ const App = () => {
           </li>
         ))}
       </ul>
+=======
+    <h2>People</h2>
+    <form onSubmit={addPerson}>
+      <input 
+        value={newPerson}
+        onChange={(event) => setNewPerson(event.target.value)}
+      />
+      <button type="submit" onSubmit={handlePersonChange}>add</button>
+    </form>
+    <ul>
+      {people.map(person => 
+        <People key={person.id} person={person} />
+      )}
+
+    </ul>
+>>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
     </div>
-  );
+  )
+
 };
 
-export default App;
+export default App

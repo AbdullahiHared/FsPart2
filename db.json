@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "people": [
     {
       "id": 5,
@@ -44,6 +45,34 @@
       "id": 1,
       "name": "mz",
       "number": "1"
+=======
+  "people":[
+    { 
+      "name": "Arto Hellas", 
+      "number": "040-123456",
+      "id": "1"
+    },
+    { 
+      "name": "Ada Lovelace", 
+      "number": "39-44-5323523",
+      "id": "2"
+    },
+    { 
+      "name": "Dan Abramov", 
+      "number": "12-43-234345",
+      "id": "3"
+    },
+    { 
+      "name": "Mary Poppendieck", 
+      "number": "39-23-6423122",
+      "id": "4"
+    },
+
+    {
+      "name" : "Abdullahi Hared", 
+      "number" : "040-123456",
+      "id" : "5"
+>>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
     }
   ]
 }

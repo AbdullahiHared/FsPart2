@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from 'axios'
 const baseUrl = 'http://localhost:3001/people'
 
@@ -18,3 +19,12 @@ const update = (id, newObject) => {
 
 
 export default { getAll, create, update }
+=======
+const People = ({ person }) => {
+  return (
+    <li>{person.name} : {person.number}</li>
+  )
+}
+
+export default People
+>>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
