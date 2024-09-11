@@ -22,12 +22,21 @@ const App = () => {
     setNewPerson('')
   }
 
+  const handlePersonChange = (event) => {
+    setNewPerson(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+
   useEffect(() => {
     console.log('effect')
     axios
       .get('http://localhost:3001/people')
       .then(response => {
         console.log('promise fulfilled')
+        console.log('response.data', response.data);
         setPeople(response.data)
       }).catch(error => {
         console.log('error', error)
@@ -42,7 +51,7 @@ const App = () => {
         value={newPerson}
         onChange={(event) => setNewPerson(event.target.value)}
       />
-      <button type="submit">add</button>
+      <button type="submit" onSubmit={handlePersonChange}>add</button>
     </form>
     <ul>
       {people.map(person => 
