@@ -78,7 +78,7 @@ const App = () => {
           setNotification(`Added ${newPerson.name}`);
           setTimeout(() => {
             setNotification("");
-          }, 5000);
+          }, 3000);
         })
         .catch((error) => {
           setErrorMessage(error.response?.data || error.message);
@@ -138,7 +138,7 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
+      <h2>Contacts</h2>
       <ul>
         {filteredUsers.map((person) => (
           <li key={person.id}>

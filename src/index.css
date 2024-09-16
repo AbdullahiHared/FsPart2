@@ -1,11 +1,12 @@
-h1 {
-    color: green;
+body, * {
+  background-color: rgb(72, 70, 70);
+  color: white;
+  font-family: serif;
 }
 
 li {
-    color: grey;
     padding-top: 3px;
-    font-size: 15px;
+    font-size: 25px;
   }
 
   .error, .success {
@@ -26,3 +27,29 @@ li {
     border: none;
   }
 
+
+  form {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    width: fit-content;
+    padding: 3%;
+    background-color: #ebdfdf;
+    border-radius: 10px;
+  }
+
+  button {
+    border-radius: 10px;
+    width: 200px;
+    background: transparent;
+  }
+  
+
+
+  input {
+    width: 150px;
+    height: 29px;
+  }
