@@ -1,14 +1,12 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import Filter from "./components/Filter";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const baseUrl = "http://localhost:3001/people";
+const baseUrl = 'http://localhost:3001/people';
 
-const postPersonObject = (personObject) => {
+const getPersons = () => {
   return axios
-    .post(baseUrl, personObject)
-    .then((response) => console.log("Response: ", response.data))
+    .get(baseUrl)
+    .then((response) => response.data)
     .catch((error) => console.log("Error: ", error));
 };
 
@@ -17,102 +15,94 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [newName, setNewName] = useState("");
   const [searchItem, setSearchItem] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState(persons);
-=======
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import People from './components/People'
-
-const App = () => {
-  const [people, setPeople] = useState([])
-  const [newPerson, setNewPerson] = useState('')
-  const [number, setNumber] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-  const [showAll, setShowAll] = useState(true)
->>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
-
-
-  const addPerson = (event) => {
-    event.preventDefault()
-    const personObject = {
-      name: newPerson,
-      number: newNumber,
-<<<<<<< HEAD
-      id: persons.length + 1, 
-    };
-
-    const updatedPersons = persons.concat(personObject);
-    setPersons(updatedPersons);
-
-    // Update filteredUsers based on current search value
-    if (searchItem) {
-      setFilteredUsers(
-        updatedPersons.filter((person) =>
-          person.name.toLowerCase().includes(searchItem.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredUsers(updatedPersons); // If no search term, show all
-    }
-
-    // Post the new person to the backend
-    postPersonObject(personObject);
-
-    // Clear input fields
-    setNewName("");
-    setNewNumber("");
-  };
-=======
-      id: people.length + 1,
-    }
-
-    setPeople(people.concat(personObject))
-    setNewPerson('')
-  }
-
-  const handlePersonChange = (event) => {
-    setNewPerson(event.target.value)
-  }
-
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-  }
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/people')
-      .then(response => {
-        console.log('promise fulfilled')
-        console.log('response.data', response.data);
-        setPeople(response.data)
-      }).catch(error => {
-        console.log('error', error)
+    getPersons()
+      .then((data) => {
+        setPersons(data);
+        setFilteredUsers(data); // Initialize filteredUsers with the fetched data
       })
-  }, [])
->>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
+      .catch((error) => console.log("Error: ", error));
+  }, []);
+
+  // Filter change handler
+  const handleFilterChange = (event) => {
+    const searchValue = event.target.value;
+    setSearchItem(searchValue);
+
+    // Filter persons based on search value and update filteredUsers state
+    const filteredPersons = persons.filter((person) =>
+      person.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    setFilteredUsers(filteredPersons);
+  };
+
+  // Name change handler
+  const handleNameChange = (event) => {
+    setNewName(event.target.value);
+  };
+
+  // Number change handler
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
+  };
+
+  const addPerson = (event) => {
+    event.preventDefault();
+
+    if (persons.some((person) => person.name === newName && person.number === newNumber)) {
+      alert(`${newName} with number ${newNumber} is already added to phonebook`);
+    } else {
+      const newPerson = {
+        name: newName,
+        number: newNumber,
+      };
+
+      axios
+        .post(baseUrl, newPerson)
+        .then((response) => {
+          setPersons(persons.concat(response.data));
+          setFilteredUsers(persons.concat(response.data));
+          setNewName("");
+          setNewNumber("");
+          setNotification(`Added ${newPerson.name}`);
+          setTimeout(() => {
+            setNotification("");
+          }, 5000);
+        })
+        .catch((error) => {
+          setErrorMessage(error.response?.data || error.message);
+          console.error("Error in adding person:", error);
+        });
+    }
+  };
 
   const handleDelete = (id) => {
     const person = persons.find((person) => person.id === id);
-  
-    // Ensure the person exists before attempting to delete
     if (!person) {
       console.log(`Person with id ${id} not found.`);
       return;
     }
-  
+
     const confirmDelete = window.confirm(`Delete ${person.name}?`);
-  
     if (confirmDelete) {
-      // Send DELETE request to backend
+      const deleteUrl = `${baseUrl}/${id}`;
+      console.log(`Sending DELETE request to: ${deleteUrl}`);
+
       axios
-        .delete(`${baseUrl}/${id}`)
+        .delete(deleteUrl)
         .then(() => {
-          // Update local state after successful deletion
           const updatedPersons = persons.filter((person) => person.id !== id);
           setPersons(updatedPersons);
-
-          setFilteredUsers(updatedPersons); // Update filteredUsers state
+          setFilteredUsers(updatedPersons);
+          setNotification(`Deleted ${person.name}`);
+          setTimeout(() => {
+            setNotification("");
+          }, 5000);
         })
         .catch((error) => {
           console.error("Error deleting person:", error);
@@ -120,57 +110,38 @@ const App = () => {
         });
     }
   };
-  
+
   return (
     <div>
-<<<<<<< HEAD
       <h2>Phonebook</h2>
-      <Filter filter={searchItem} handleFilterChange={handleFilterChange} />
-
-      <h3>Add a new person</h3>
+      {notification && <div className="success">{notification}</div>}
+      {errorMessage && <div className="error">{errorMessage}</div>}
+      <div>
+        filter shown with <input value={searchItem} onChange={handleFilterChange} />
+      </div>
+      <h2>Add a new</h2>
       <form onSubmit={addPerson}>
-        <label htmlFor="name">Name</label>
-        <input id="name" value={newName} onChange={handleNameChange} />
-
-        <label htmlFor="number">Number</label>
-        <input
-          type="number"
-          id="number"
-          value={newNumber}
-          onChange={handleNumberChange}
-        />
-        <button type="submit">Add</button>
+        <div>
+          name: <input value={newName} onChange={handleNameChange} />
+        </div>
+        <div>
+          number: <input value={newNumber} onChange={handleNumberChange} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
       </form>
-
       <h2>Numbers</h2>
       <ul>
         {filteredUsers.map((person) => (
           <li key={person.id}>
-            {person.name} : {person.number}
-            <br />
+            {person.name} {person.number}
             <button onClick={() => handleDelete(person.id)}>delete</button>
           </li>
         ))}
       </ul>
-=======
-    <h2>People</h2>
-    <form onSubmit={addPerson}>
-      <input 
-        value={newPerson}
-        onChange={(event) => setNewPerson(event.target.value)}
-      />
-      <button type="submit" onSubmit={handlePersonChange}>add</button>
-    </form>
-    <ul>
-      {people.map(person => 
-        <People key={person.id} person={person} />
-      )}
-
-    </ul>
->>>>>>> 845b41fad46cf2311637efd6ac6655541ffc1b1e
     </div>
-  )
-
+  );
 };
 
-export default App
+export default App;
