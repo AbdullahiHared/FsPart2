@@ -1,14 +1,14 @@
 {
   "people": [
     {
-      "id": "6392",
-      "name": "sdsa",
-      "number": "22"
+      "id": 1,
+      "name": "John Doe",
+      "age": 29
     },
     {
-      "id": "c25d",
-      "name": "fdsfsd",
-      "number": "21312"
+      "id": 2,
+      "name": "Jane Doe",
+      "age": 25
     }
   ]
 }
