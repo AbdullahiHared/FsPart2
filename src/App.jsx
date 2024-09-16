@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const baseUrl = 'http://localhost:3001/people';
+const baseUrl = "http://localhost:3001/people";
 
 const getPersons = () => {
   return axios
@@ -54,8 +54,14 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    if (persons.some((person) => person.name === newName && person.number === newNumber)) {
-      alert(`${newName} with number ${newNumber} is already added to phonebook`);
+    if (
+      persons.some(
+        (person) => person.name === newName && person.number === newNumber
+      )
+    ) {
+      alert(
+        `${newName} with number ${newNumber} is already added to phonebook`
+      );
     } else {
       const newPerson = {
         name: newName,
@@ -117,7 +123,8 @@ const App = () => {
       {notification && <div className="success">{notification}</div>}
       {errorMessage && <div className="error">{errorMessage}</div>}
       <div>
-        filter shown with <input value={searchItem} onChange={handleFilterChange} />
+        filter shown with{" "}
+        <input value={searchItem} onChange={handleFilterChange} />
       </div>
       <h2>Add a new</h2>
       <form onSubmit={addPerson}>
