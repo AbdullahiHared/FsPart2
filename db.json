@@ -1,3 +1,19 @@
 {
-  "people": []
+  "people": [
+    {
+      "id": "c22e",
+      "name": "122",
+      "number": "2"
+    },
+    {
+      "id": "2300",
+      "name": "SsA",
+      "number": "21"
+    },
+    {
+      "id": "ea23",
+      "name": "Muxsin",
+      "number": "12"
+    }
+  ]
 }

@@ -1,8 +1,13 @@
 body, * {
   background-color: rgb(72, 70, 70);
   color: white;
-  font-family: serif;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
+
 
 li {
     padding-top: 3px;
@@ -27,29 +32,64 @@ li {
     border: none;
   }
 
+  .addPersonBtn, button {
+    background-color: blue;
+    padding: 10px;
+    font-size: 20px;
+    width: 150px;
+    border: none;
+    margin: 20px;
+    border-radius: 10px;
+  }
 
-  form {
+  .searchFilter {
     display: flex;
-    justify-content: space-around;
-    align-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-direction: column;
-    width: fit-content;
-    padding: 3%;
-    background-color: #ebdfdf;
-    border-radius: 10px;
+    justify-content: center;
+    align-items: center ;
+    font-size: large;
+    gap: 19px;
+    text-align: center;
   }
 
-  button {
-    border-radius: 10px;
-    width: 200px;
-    background: transparent;
+  .searchFilter > input {
+    width: 39%;
+    border: none;
+    border-radius: 19px;
   }
-  
 
 
   input {
     width: 150px;
     height: 29px;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 29px;
+  }
+  .person {
+    background-color: aliceblue;
+    color: black;
+    text-align: left;
+    height: auto;
+    width: 30%;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+  }
+
+  .person > button {
+    background-color:white;
+    color: black;
+    border: 0.5px solid black;
+  }
+
+  .person > button:hover {
+    background-color: red;
+    color: white;
+    border: none;
+    transition: .5s;
   }
